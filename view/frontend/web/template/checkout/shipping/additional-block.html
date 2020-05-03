@@ -1,0 +1,55 @@
+<div id="dpd-widget-select">
+    <label for="point-wrapper">Wybrany punkt:</label>
+    <input type="text" name="shipping_description" id="point-wrapper" title="Numer wybranego punktu odbioru"
+        class="input-text" disabled="disabled" />
+</div>
+
+<div id="dpd-widget"></div>
+
+<div data-bind="afterRender: 
+function() {
+    var iframe = document.createElement('iframe');
+    iframe.src = '//pudofinder.dpd.com.pl/widget?key=a9b08eb6c1b218b975529f9cea0e1364';
+    iframe.style.width = '100%';
+    iframe.style.border = 'none';
+    iframe.style.minHeight = '400px';
+
+    var script = document.getElementById('dpd-widget').appendChild(iframe);
+
+    var eventListener = window[window.addEventListener ? 'addEventListener' : 'attachEvent'];
+    var messageEvent = ('attachEvent' == eventListener)? 'onmessage': 'message';
+    eventListener(messageEvent, function(a) {
+        if(a.data.height && !isNaN(a.data.height)){
+            iframe.style.height = a.data.height + 'px'
+        }else if( a.data.point_id){
+            document.getElementById('point-wrapper').value = a.data.point_id;
+        }
+    }, !1);
+
+    var $ = jQuery.noConflict();
+    if ($('input[type=radio][value=Dpdshippingpickup_Dpdshippingpickup]').prop('checked') === true)
+        {
+            $('#dpd-widget-select').show();
+            $('#dpd-widget').show();
+        }else{
+            $('#dpd-widget-select').hide();
+            $('#dpd-widget').hide();
+      }
+}">
+</div>
+
+<div data-bind="afterRender: 
+function() {
+    var $ = jQuery.noConflict();
+    $('#checkout-shipping-method-load').on('click',function(){
+        if ($('input[type=radio][value=Dpdshippingpickup_Dpdshippingpickup]').prop('checked') === true)
+        {
+            $('#dpd-widget-select').show();
+            $('#dpd-widget').show();
+        }else{
+            $('#dpd-widget-select').hide();
+            $('#dpd-widget').hide();
+      }
+    });
+}">
+</div>

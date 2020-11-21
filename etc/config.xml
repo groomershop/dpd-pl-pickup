@@ -11,7 +11,7 @@
                 <title>DPD POLSKA - Odbiór w punkcie</title>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
                 <handling_type>F</handling_type>
-            </Dpdshippingpickup>
+            </dpdshippingpickup>
         </carriers>
     </default>
 </config>

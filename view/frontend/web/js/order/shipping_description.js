@@ -14,13 +14,13 @@ define([
             }
 
             if(jQuery('[id="point-wrapper"]').val() != ""){
-                shippingAddress['extension_attributes']['shipping_description'] = jQuery('[id="point-wrapper"]').val();
+                shippingAddress['extension_attributes']['shipping_description_dpd'] = jQuery('[id="point-wrapper"]').val();
                 shippingAddress['suffix'] = "[DPD_PICKUP:"+jQuery('[id="point-wrapper"]').val()+"]";
             }else{
-                shippingAddress['extension_attributes']['shipping_description'] = null;
+                shippingAddress['extension_attributes']['shipping_description_dpd'] = null;
                 shippingAddress['suffix'] = null;
             }
-            
+
             return originalAction();
         });
     };

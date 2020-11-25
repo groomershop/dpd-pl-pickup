@@ -19,8 +19,8 @@ class ShippingAddressManagement
         \Magento\Quote\Api\Data\AddressInterface $address
     ) {
         $extAttributes = $address->getExtensionAttributes();
-        if (!empty($extAttributes) && !empty($extAttributes->getShippingDescription())) {
-            $address["suffix"] = "[DPD_PICKUP:".$extAttributes->getShippingDescription()."]";
+        if (!empty($extAttributes) && !empty($extAttributes->getShippingDescriptionDpd())) {
+            $address["suffix"] = "[DPD_PICKUP:".$extAttributes->getShippingDescriptionDpd()."]";
         }
     }
 }

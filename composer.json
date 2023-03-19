@@ -1,13 +1,14 @@
 {
-    "name": "dpdpoland/dpdshippingpickup",
-    "description": "DpdPoland Dpdshipping PickUp plugin",
-    "type": "magento2-module",
-    "autoload": {
-        "files": [
-            "registration.php"
-        ],
-        "psr-4": {
-            "DpdPoland\\Dpdshippingpickup\\": ""
-        }
+  "name": "dpdpoland/dpdshippingpickup",
+  "description": "DPD Polska Sp. z o.o.",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "DpdPoland\\Dpdshippingpickup\\": ""
     }
+  }
 }

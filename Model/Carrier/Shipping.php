@@ -1,4 +1,5 @@
 <?php
+
 namespace DpdPoland\Dpdshippingpickup\Model\Carrier;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
@@ -25,12 +26,12 @@ class Shipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier implement
     /**
      * Shipping constructor.
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface          $scopeConfig
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory  $rateErrorFactory
-     * @param \Psr\Log\LoggerInterface                                    $logger
-     * @param \Magento\Shipping\Model\Rate\ResultFactory                  $rateResultFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Shipping\Model\Rate\ResultFactory $rateResultFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
-     * @param array                                                       $data
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -39,7 +40,8 @@ class Shipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier implement
         \Magento\Shipping\Model\Rate\ResultFactory $rateResultFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
         array $data = []
-    ) {
+    )
+    {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
@@ -60,11 +62,19 @@ class Shipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier implement
     private function getShippingPrice()
     {
         $configPrice = $this->getConfigData('price');
+        $freeShipping = $this->getConfigData('free_shipping');
+        $freeShippingMinimalAmount = $this->getConfigData('free_shipping_minimal_amount');
 
-        $shippingPrice = $this->getFinalPriceWithHandlingFee($configPrice);
-
-        return $shippingPrice;
+        if ($freeShipping == true) {
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+            $grandTotal = $cart->getQuote()->getGrandTotal();
+            if ($grandTotal >= $freeShippingMinimalAmount)
+                return $this->getFinalPriceWithHandlingFee(0);
+        }
+        return $this->getFinalPriceWithHandlingFee($configPrice);
     }
+
 
     /**
      * @param RateRequest $request

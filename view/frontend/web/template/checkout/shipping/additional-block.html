@@ -24,11 +24,13 @@ function() {
         }else if( a.data.point_id){
             document.getElementById('point-wrapper').value = a.data.point_id;
 
+            const keyUpEvent = new Event('keyup');
             const shippingPointIdInput = document.querySelector(
                 '[name=\'swissup_checkout_field[shipping_point_id]\']'
             );
             if (shippingPointIdInput !== null) {
                 shippingPointIdInput.value = a.data.point_id;
+                shippingPointIdInput.dispatchEvent(keyUpEvent);
             }
             
             const shippingPointNameInput = document.querySelector(
@@ -36,6 +38,7 @@ function() {
             );
             if (shippingPointNameInput !== null) {
                 shippingPointNameInput.value = 'DPD Pickup ' + a.data.point_id;
+                shippingPointNameInput.dispatchEvent(keyUpEvent);
             }
         }
     }, !1);

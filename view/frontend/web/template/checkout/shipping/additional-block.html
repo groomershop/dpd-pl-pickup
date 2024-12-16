@@ -25,14 +25,14 @@ function() {
             document.getElementById('point-wrapper').value = a.data.point_id;
 
             const shippingPointIdInput = document.querySelector(
-                '[name=swissup_checkout_field[shipping_point_id]]'
+                '[name=\'swissup_checkout_field[shipping_point_id]\']'
             );
             if (shippingPointIdInput !== null) {
                 shippingPointIdInput.value = a.data.point_id;
             }
             
             const shippingPointNameInput = document.querySelector(
-                '[name=swissup_checkout_field[shipping_point_name]]'
+                '[name=\'swissup_checkout_field[shipping_point_name]\']'
             );
             if (shippingPointNameInput !== null) {
                 shippingPointNameInput.value = a.data.point_name;

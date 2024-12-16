@@ -24,7 +24,7 @@ function() {
         }else if( a.data.point_id){
             document.getElementById('point-wrapper').value = a.data.point_id;
 
-            const keyUpEvent = new Event('keyup');
+            const keyUpEvent = new KeyboardEvent('keyup');
             const shippingPointIdInput = document.querySelector(
                 '[name=\'swissup_checkout_field[shipping_point_id]\']'
             );

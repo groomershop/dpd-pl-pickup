@@ -16,13 +16,6 @@ define([
             if(jQuery('[id="point-wrapper"]').val() != ""){
                 shippingAddress['extension_attributes']['shipping_dpd_pickup'] = jQuery('[id="point-wrapper"]').val();
                 shippingAddress['suffix'] = "[DPD_PICKUP:"+jQuery('[id="point-wrapper"]').val()+"]";
-                
-                const shippingPointIdInput = jQuery(
-                    '[name="swissup_checkout_field[shipping_point_id]"]'
-                );
-                if (shippingPointIdInput !== null) {
-                    shippingPointIdInput.val( jQuery('[id="point-wrapper"]').val() );
-                }
             }else{
                 shippingAddress['extension_attributes']['shipping_dpd_pickup'] = null;
                 shippingAddress['suffix'] = null;

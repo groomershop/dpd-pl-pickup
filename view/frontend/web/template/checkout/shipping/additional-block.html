@@ -35,7 +35,7 @@ function() {
                 '[name=\'swissup_checkout_field[shipping_point_name]\']'
             );
             if (shippingPointNameInput !== null) {
-                shippingPointNameInput.value = '';
+                shippingPointNameInput.value = 'DPD Pickup ' + a.data.point_id;
             }
         }
     }, !1);

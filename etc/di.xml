@@ -1,11 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
-        <policies>
-            <policy id="frame-src">
-                <values>
-                    <value id="frame_dpd" type="host">pudofinder.dpd.com.pl</value>
-                </values>
-            </policy>
-        </policies>
-</csp_whitelist>
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Model\ShippingAddressManagement">
+        <plugin disabled="false" name="DpdPoland_Dpdshippingpickup_Plugin_Magento_Quote_Model_ShippingAddressManagement" sortOrder="10" type="DpdPoland\Dpdshippingpickup\Plugin\Magento\Quote\Model\ShippingAddressManagement"/>
+    </type>
+</config>

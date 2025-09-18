@@ -1,72 +1,36 @@
 <div id="dpd-widget-select">
-    <label for="point-wrapper">Wybrany punkt:</label>
+    <label for="point-wrapper" data-bind="i18n: 'Wybrany punkt:'"></label>
     <input type="text" name="shipping_dpd_pickup" id="point-wrapper" title="Numer wybranego punktu odbioru"
-        class="input-text" disabled="disabled" />
+           class="input-text" disabled="disabled"/>
 </div>
 
 <div id="dpd-widget"></div>
 
-<div data-bind="afterRender: 
+<div data-bind="afterRender:
 function() {
-    var iframe = document.createElement('iframe');
-    iframe.src = '//pudofinder.dpd.com.pl/widget?key=a9b08eb6c1b218b975529f9cea0e1364';
-    iframe.style.width = '100%';
-    iframe.style.border = 'none';
-    iframe.style.minHeight = '400px';
+    var $ = jQuery.noConflict();
 
-    var script = document.getElementById('dpd-widget').appendChild(iframe);
+    const dpdShippingMethodValue = 'dpdshippingpickup_dpdshippingpickup';
+    const dpdPointWrapperSelector = '#point-wrapper';
+    const dpdOrderNextButtonSelector = '#shipping-method-buttons-container button[data-role=\'opc-continue\']';
 
-    var eventListener = window[window.addEventListener ? 'addEventListener' : 'attachEvent'];
-    var messageEvent = ('attachEvent' == eventListener)? 'onmessage': 'message';
-    eventListener(messageEvent, function(a) {
-        if(a.data.height && !isNaN(a.data.height)){
-            iframe.style.height = a.data.height + 'px'
-        }else if( a.data.point_id){
-            document.getElementById('point-wrapper').value = a.data.point_id;
+    function isDpdPickupPointSelected() {
+        const isDpdPickupSelected = $(`input[type=radio][value='${dpdShippingMethodValue}']`).prop('checked');
+        const dpdPickupPointValue = $(dpdPointWrapperSelector).val();
 
-            const keyUpEvent = new KeyboardEvent('keyup');
-            const shippingPointIdInput = document.querySelector(
-                '[name=\'swissup_checkout_field[shipping_point_id]\']'
-            );
-            if (shippingPointIdInput !== null) {
-                shippingPointIdInput.value = a.data.point_id;
-                shippingPointIdInput.dispatchEvent(keyUpEvent);
-            }
-            
-            const shippingPointNameInput = document.querySelector(
-                '[name=\'swissup_checkout_field[shipping_point_name]\']'
-            );
-            if (shippingPointNameInput !== null) {
-                shippingPointNameInput.value = 'DPD Pickup ' + a.data.point_id;
-                shippingPointNameInput.dispatchEvent(keyUpEvent);
+        if (isDpdPickupSelected) {
+            if (!dpdPickupPointValue || dpdPickupPointValue.trim() === '') {
+                return false;
             }
         }
-    }, !1);
+        return true;
+    }
 
-    var $ = jQuery.noConflict();
-    if ($('input[type=radio][value=dpdshippingpickup_dpdshippingpickup]').prop('checked') === true)
-        {
-            $('#dpd-widget-select').show();
-            $('#dpd-widget').show();
-        }else{
-            $('#dpd-widget-select').hide();
-            $('#dpd-widget').hide();
-      }
-}">
-</div>
-
-<div data-bind="afterRender: 
-function() {
-    var $ = jQuery.noConflict();
-    $('#checkout-shipping-method-load').on('click',function(){
-        if ($('input[type=radio][value=dpdshippingpickup_dpdshippingpickup]').prop('checked') === true)
-        {
-            $('#dpd-widget-select').show();
-            $('#dpd-widget').show();
-        }else{
-            $('#dpd-widget-select').hide();
-            $('#dpd-widget').hide();
-      }
+    $('body').on('click', dpdOrderNextButtonSelector, function (e) {
+        if (!isDpdPickupPointSelected()) {
+            e.preventDefault();
+            alert($t('Please select a DPD Pickup point before proceeding.'));
+        }
     });
 }">
 </div>

@@ -1,8 +1,9 @@
 define([
+    'jquery',
     'uiComponent',
     'Magento_Checkout/js/model/quote',
     'ko'
-], function (Component, quote, ko) {
+], function ($, Component, quote, ko) {
     'use strict';
 
     return Component.extend({
